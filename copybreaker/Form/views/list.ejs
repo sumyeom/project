@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/a.css">
+  <script src="/javascripts/jquery-1.12.2.min.js"></script>
+
+  <script type="text/javascript">
+    function check_TWO(){
+        var check1 = document.getElementsByName("chk_info1");
+        var check2 = document.getElementsByName("chk_info2");
+        var len1 = check1.length;
+        var len2 = check2.length;
+        var cnt1=0;
+        var cnt2=0;
+        var value1;
+        var value2;
+
+        for(var i=0 ; i<len1 ; i++){
+          if(check1[i].checked == true){
+            cnt1++; 
+            if(check2[i].checked == true){
+              alert("동일한 문서간 검사는 불가합니다.");  
+              return false;
+            }
+            else{
+              //alert(check1[i].value)
+              value1 = check1[i].value;
+            }
+          } 
+        }
+
+        for(var i=0 ; i<len2 ; i++){
+          if(check2[i].checked == true){
+            //alert(check2[i].value);
+            cnt2++;
+            value2 = check2[i].value;
+          } 
+        }
+
+        if(cnt1 + cnt2 <= 1){
+            alert("검사문서와 비교문서를 모두 선택하세요.");   
+            return false; 
+        }
+
+        document.getElementById('action1').innerHTML = "<form action='/list/result1' method='post'><input type='text' name='title1'  value='" + value1 +"'><input type='text' name='title2' value='" + value2 +"'><button type='submit'>제출</button></form>";
+    }
+
+
+    function check_ALL(){
+          var check3 = document.getElementsByName("all_check");
+          var len3 = check3.length;
+     var cnt3=0;
+
+          var str="<form action='/list/result2' method='post'>";
+          for(var i=0; i<len3; i++)
+           {
+                if(check3[i].checked == true){
+                //alert(check3[i].value);
+                cnt3++;
+                str += "<input type='text' name='title' value=' " + check3[i].value +"'>";
+               }
+           }
+            str += "<button type='submit'>제출</button></form>";
+           
+      if(cnt3  <= 1){
+           alert("검사할 문서들을 2개 이상 선택하세요.");   
+      return false; 
+       }
+
+            document.getElementById('action1').innerHTML = str;
+   }
+
+   function file_remove(obj){
+    var tr = obj.parentNode.parentNode;
+
+      // table에서 삭제 
+      if(confirm('정말로 삭제하시겠습니까?') == true){
+        tr.parentNode.removeChild(tr);
+      }
+    }
+
+  </script>
+</head>
+
+<body>
+<section class="main-header content-area3">
+  <a href="/list"><img src="/images/logo.png" width="200" height = "100" style="padding-left: 200px"/></a> 
+  <a href="/list"><img src="/images/mark.gif" width="500" height = "200" align="center" style="padding-left: 200px" /></a> 
+
+  <br><br>
+
+  <table class="type11" id="table1">
+    <thead>
+      <tr>
+        <th scope="cols">제목</th>
+        <th scope="cols">1:1 검사</th>
+        <th scope="cols">묶음 검사</th>
+        <th scope="cols">삭제할 문서 선택</th>
+      </tr>
+    </thead>
+    <%
+    for(var i=0; i<rows.length; i++)
+    {
+    var oneItem = rows[i];
+    %> 
+    <tr>
+     <td><%=oneItem.title%></td>
+     <td style="width: 40%;">
+       <label><input type = "radio" name = "chk_info1" id = "chk_info1" value="<%=oneItem.title%>">검사문서</label>
+       <label><input type = "radio" name = "chk_info2" id = "chk_info2" value="<%=oneItem.title%>">비교문서</label>
+     </td>
+     <td>
+       <input type = "checkbox" name = "all_check" id = "all_check" value="<%=oneItem.title%>">
+     </td>
+     <td>
+       <button name="action" onclick="location.href='/list/delete/<%=oneItem.idx%>'" value="<%=oneItem.idx%>" style="background-color: #ffdcdc;" >삭제</button>
+     </td> 
+   </tr>
+
+   <%
+ }
+ %>
+</table>
+
+<br>
+
+<div align="right">
+<div class="filebox">
+ <button type="ex_file" style="background-color: #fcc2c5" onclick="location.href='/list/fileupload'">파일 업로드</button>
+</div>
+
+<div class="filebox bs3-primary">
+    <button type="submit" id="checkButton" style="background-color: #ffce77" onClick="check_TWO()">1:1 검사</button>
+</div>
+
+<div class="filebox bs3-primary">
+    <button type="submit" id="AllToButton" style="background-color: #bfdc95" onClick="check_ALL()">묶음 검사</button>
+</div>
+
+<div class="filebox bs3-primary">
+    <button style="background-color: #C090E9" onClick="location.href='/list/result1'">[1:1검사] 결과 확인</button>
+</div>
+
+<div class="filebox bs3-primary">
+    <button style="background-color: #C090E9" onClick="location.href='/list/result2'">[묶음검사] 결과 확인</button>
+</div>
+
+<br><br>
+<div id="action1">
+
+</div>
+</div>
+
+</section>
+</body>
+</html>

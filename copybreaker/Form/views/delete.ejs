@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/javascripts/jquery-1.12.2.min.js"></script>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+
+    <form action = "/list/delete"  method="post" onsubmit= "return onWriteSubmit()">
+        <table class="type12" id="table2"  style="width: 280px" >
+            <input type="hidden" name="idx" value="<%=row.idx%>"/>
+	    <input type="hidden" name="title" value="<%=row.title%>"/>
+            <thead>
+              <tr>
+                  <th scope="cols">정말 삭제 하시겠습니까?</th>
+
+              </tr>
+            </thead>
+             <tr>
+     
+             <td> <button type="submit">삭제</button></td>
+            </tr>
+        
+    </tr>
+</table>
+</form>
+
+<script>
+    function onWriteSubmit()
+    {
+
+    }
+</script>
+
+</body>
+</html>
