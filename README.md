@@ -27,10 +27,10 @@
 
 # Library(Python)
 1. Gensim 
-- https://arxiv.org/pdf/1405.4053v2.pdf
 - https://insight.io/github.com/piskvorky/gensim/blob/develop/gensim/models/doc2vec.py
 - https://radimrehurek.com/gensim/models/doc2vec.html
 
 
 # Reference
-https://github.com/RaRe-Technologies/gensim/blob/develop/docs/notebooks/doc2vec-lee.ipynb
+- https://arxiv.org/pdf/1405.4053v2.pdf
+- https://github.com/RaRe-Technologies/gensim/blob/develop/docs/notebooks/doc2vec-lee.ipynb
